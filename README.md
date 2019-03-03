@@ -157,3 +157,4 @@ module "web_app_container" {
 | `docker_registry_username` | `string` | The container registry username. |
 | `docker_registry_url` | `string` | The container registry url. Default: `https://index.docker.io` |
 | `docker_registry_password` | `string` | The container registry password. |
+| `tags` | `map` | A mapping of tags to assign to the web app. |

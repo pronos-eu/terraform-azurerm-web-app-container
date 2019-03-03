@@ -137,3 +137,11 @@ variable "docker_registry_password" {
 
   description = "The container registry password."
 }
+
+variable "tags" {
+  type = "map"
+
+  default = {}
+
+  description = "A mapping of tags to assign to the web app."
+}

@@ -20,6 +20,8 @@ resource "azurerm_app_service_plan" "main" {
     tier = "${var.sku_tier}"
     size = "${var.sku_size}"
   }
+
+  tags = "${var.tags}"
 }
 
 resource "azurerm_app_service" "main" {
@@ -44,6 +46,8 @@ resource "azurerm_app_service" "main" {
     "DOCKER_REGISTRY_SERVER_URL"          = "${var.docker_registry_url}"
     "DOCKER_REGISTRY_SERVER_PASSWORD"     = "${var.docker_registry_password}"
   }
+
+  tags = "${var.tags}"
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "main" {

@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.1.0...v1.2.0) (2019-03-13)
+
+
+### Features
+
+* add `app_settings` argument ([8f9d092](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/8f9d092))
+
 # [1.1.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.0.0...v1.1.0) (2019-03-03)
 
 

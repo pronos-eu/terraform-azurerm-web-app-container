@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.2.0...v1.3.0) (2019-03-13)
+
+
+### Features
+
+* add `ip_restrictions` argument ([aa94d1c](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/aa94d1c))
+
 # [1.2.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.1.0...v1.2.0) (2019-03-13)
 
 

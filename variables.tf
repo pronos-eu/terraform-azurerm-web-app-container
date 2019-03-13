@@ -66,6 +66,14 @@ variable "command" {
   description = "A command to be run on the container."
 }
 
+variable "app_settings" {
+  type = "map"
+
+  default = {}
+
+  description = "Set web app settings. These are avilable as environment variables at runtime."
+}
+
 variable "app_service_plan_id" {
   type = "string"
 

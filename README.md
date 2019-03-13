@@ -135,6 +135,31 @@ module "web_app_container" {
 }
 ```
 
+### Set environment variables (App Settings)
+
+```hcl
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "westeurope"
+}
+
+module "web_app_container" {
+  source = "innovationnorway/web-app-container/azurerm"
+
+  name = "hello-world"
+
+  resource_group_name = "${azurerm_resource_group.example.name}"
+
+  container_type = "docker"
+
+  container_image = "innovationnorway/python-hello-world:latest"
+
+  app_settings = {
+    MESSAGE = "Hello World!"
+  }
+}
+```
+
 ## Arguments
 
 | Name | Type | Description |
@@ -148,6 +173,7 @@ module "web_app_container" {
 | `enable_storage` | `bool` | Mount an SMB share to the `/home/` directory. Default: `false`. |
 | `start_time_limit` | `string` | Configure the amount of time (in seconds) the app service will wait before it restarts the container. Default: `230`. | 
 | `command` | `string` | A command to be run on the container. |
+| `app_settings` | `map` | Set web app settings. These are avilable as environment variables at runtime. |
 | `app_service_plan_id` | `string` | The ID of an existing app service plan to use for the web app. |
 | `sku_tier` | `string` | The pricing tier of an app service plan to use for the web app. Default: `Standard`. |
 | `sku_size` | `string` | The instance size of an app service plan to use for the web app. Default: `S1`. |

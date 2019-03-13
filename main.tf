@@ -45,6 +45,7 @@ resource "azurerm_app_service" "main" {
   site_config {
     app_command_line = "${var.command}"
     ftps_state       = "${var.ftps_state}"
+    ip_restriction   = "${var.ip_restrictions}"
     linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
   }
 

@@ -114,6 +114,14 @@ variable "ftps_state" {
   description = "Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`."
 }
 
+variable "ip_restrictions" {
+  type = "list"
+
+  default = []
+
+  description = "Configure IP restrictions for the web app."
+}
+
 variable "custom_hostnames" {
   type = "list"
 

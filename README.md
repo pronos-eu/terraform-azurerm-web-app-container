@@ -160,6 +160,37 @@ module "web_app_container" {
 }
 ```
 
+### Configure IP restrictions
+
+```hcl
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "westeurope"
+}
+
+module "web_app_container" {
+  source = "innovationnorway/web-app-container/azurerm"
+
+  name = "hello-world"
+
+  resource_group_name = "${azurerm_resource_group.example.name}"
+
+  container_type = "docker"
+
+  container_image = "innovationnorway/python-hello-world:latest"
+
+  ip_restrictions = [
+    {
+      ip_address = "192.168.3.4"
+    },
+    {
+      ip_address  = "192.168.2.0"
+      subnet_mask = "255.255.255.0"
+    },
+  ]
+}
+```
+
 ## Arguments
 
 | Name | Type | Description |
@@ -179,6 +210,7 @@ module "web_app_container" {
 | `sku_size` | `string` | The instance size of an app service plan to use for the web app. Default: `S1`. |
 | `https_only` | `bool` | Redirect all traffic made to the web app using HTTP to HTTPS. Default: `true`. |
 | `ftps_state` | `string` | Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`. Default: `Disabled`. |
+| `ip_restrictions` | `list` | Configure IP restrictions for the web app. |
 | `custom_hostnames` | `list` | List of custom hostnames to use for the web app. |
 | `docker_registry_username` | `string` | The container registry username. |
 | `docker_registry_url` | `string` | The container registry url. Default: `https://index.docker.io` |

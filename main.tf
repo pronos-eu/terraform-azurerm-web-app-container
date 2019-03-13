@@ -1,7 +1,17 @@
 locals {
-  container_type      = "${upper(var.container_type)}"
-  container_config    = "${base64encode(var.container_config)}"
   app_service_plan_id = "${var.app_service_plan_id != "" ? var.app_service_plan_id : element(coalescelist(azurerm_app_service_plan.main.*.id, list("")), 0)}"
+
+  container_type   = "${upper(var.container_type)}"
+  container_config = "${base64encode(var.container_config)}"
+
+  app_settings = {
+    "WEBSITES_CONTAINER_START_TIME_LIMIT" = "${var.start_time_limit}"
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "${var.enable_storage}"
+    "WEBSITES_PORT"                       = "${var.port}"
+    "DOCKER_REGISTRY_SERVER_USERNAME"     = "${var.docker_registry_username}"
+    "DOCKER_REGISTRY_SERVER_URL"          = "${var.docker_registry_url}"
+    "DOCKER_REGISTRY_SERVER_PASSWORD"     = "${var.docker_registry_password}"
+  }
 }
 
 data "azurerm_resource_group" "main" {
@@ -38,14 +48,7 @@ resource "azurerm_app_service" "main" {
     linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
   }
 
-  app_settings {
-    "WEBSITES_CONTAINER_START_TIME_LIMIT" = "${var.start_time_limit}"
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "${var.enable_storage}"
-    "WEBSITES_PORT"                       = "${var.port}"
-    "DOCKER_REGISTRY_SERVER_USERNAME"     = "${var.docker_registry_username}"
-    "DOCKER_REGISTRY_SERVER_URL"          = "${var.docker_registry_url}"
-    "DOCKER_REGISTRY_SERVER_PASSWORD"     = "${var.docker_registry_password}"
-  }
+  app_settings = "${merge(var.app_settings, local.app_settings)}"
 
   tags = "${var.tags}"
 }

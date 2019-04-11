@@ -52,6 +52,10 @@ resource "azurerm_app_service" "main" {
 
   app_settings = "${merge(var.app_settings, local.app_settings)}"
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   tags = "${var.tags}"
 }
 

@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.4.0...v1.5.0) (2019-04-11)
+
+
+### Features
+
+* add system-assigned identity ([7e33b43](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/7e33b43))
+
 # [1.4.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.3.0...v1.4.0) (2019-04-11)
 
 

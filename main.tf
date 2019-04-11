@@ -43,6 +43,7 @@ resource "azurerm_app_service" "main" {
   https_only = "${var.https_only}"
 
   site_config {
+    always_on        = "${var.always_on}"
     app_command_line = "${var.command}"
     ftps_state       = "${var.ftps_state}"
     ip_restriction   = "${var.ip_restrictions}"

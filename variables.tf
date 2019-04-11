@@ -98,6 +98,14 @@ variable "sku_size" {
   description = "The instance size of an app service plan to use for the web app."
 }
 
+variable "always_on" {
+  type = "string"
+
+  default = true
+
+  description = "Either `true` to ensure the web app gets loaded all the time, or `false` to to unload after being idle."
+}
+
 variable "https_only" {
   type = "string"
 

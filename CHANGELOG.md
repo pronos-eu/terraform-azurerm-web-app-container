@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.3.0...v1.4.0) (2019-04-11)
+
+
+### Features
+
+* add `always_on` argument ([aa5dfb0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/aa5dfb0))
+
 # [1.3.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.2.0...v1.3.0) (2019-03-13)
 
 

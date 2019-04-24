@@ -179,15 +179,7 @@ module "web_app_container" {
 
   container_image = "innovationnorway/python-hello-world:latest"
 
-  ip_restrictions = [
-    {
-      ip_address = "192.168.3.4"
-    },
-    {
-      ip_address  = "192.168.2.0"
-      subnet_mask = "255.255.255.0"
-    },
-  ]
+  ip_restrictions = ["192.168.3.4/32", "192.168.2.0/24"]
 }
 ```
 
@@ -210,7 +202,7 @@ module "web_app_container" {
 | `always_on` | `bool` | Either `true` to ensure the web app gets loaded all the time, or `false` to to unload after being idle. |
 | `https_only` | `bool` | Redirect all traffic made to the web app using HTTP to HTTPS. Default: `true`. |
 | `ftps_state` | `string` | Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`. Default: `Disabled`. |
-| `ip_restrictions` | `list` | Configure IP restrictions for the web app. |
+| `ip_restrictions` | `list` | A list of IP addresses in CIDR format specifying Access Restrictions. |
 | `custom_hostnames` | `list` | List of custom hostnames to use for the web app. |
 | `docker_registry_username` | `string` | The container registry username. |
 | `docker_registry_url` | `string` | The container registry url. Default: `https://index.docker.io` |

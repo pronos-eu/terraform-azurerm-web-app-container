@@ -87,9 +87,9 @@ variable "ftps_state" {
 }
 
 variable "ip_restrictions" {
-  type        = list(any)
+  type        = list(string)
   default     = []
-  description = "Configure IP restrictions for the web app."
+  description = "A list of IP addresses in CIDR format specifying Access Restrictions."
 }
 
 variable "custom_hostnames" {

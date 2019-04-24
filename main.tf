@@ -20,6 +20,13 @@ locals {
   check_supported_container_types = local.supported_container_types[local.container_type]
 
   linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
+
+  ip_restrictions = [
+    for prefix in var.ip_restrictions : {
+      ip_address  = split("/", prefix)[0]
+      subnet_mask = cidrnetmask(prefix)
+    }
+  ]
 }
 
 data "azurerm_resource_group" "main" {
@@ -54,7 +61,7 @@ resource "azurerm_app_service" "main" {
     always_on        = var.always_on
     app_command_line = var.command
     ftps_state       = var.ftps_state
-    ip_restriction   = var.ip_restrictions
+    ip_restriction   = local.ip_restrictions
     linux_fx_version = local.linux_fx_version
   }
 

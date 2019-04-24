@@ -21,7 +21,7 @@ module "web_app_container" {
 
   container_type = "docker"
 
-  container_image = "innovationnorway/python-hello-world:latest"
+  container_image = "innovationnorway/go-hello-world:latest"
 }
 ```
 
@@ -46,7 +46,7 @@ module "web_app_container" {
 version: '3'
 services:
   web:
-    image: "innovationnorway/python-hello-world"
+    image: "innovationnorway/go-hello-world"
     ports:
      - "80:80"
   redis:
@@ -80,7 +80,7 @@ metadata:
 spec:
   containers:
   - name: web
-    image: innovationnorway/python-hello-world
+    image: innovationnorway/go-hello-world
     ports:
       - containerPort: 80
   - name: redis
@@ -119,7 +119,7 @@ resource "azurerm_resource_group" "example" {
 }
 
 data "http" "container_config" {
-  url = "https://raw.githubusercontent.com/innovationnorway/python-hello-world/master/docker-compose.yml"
+  url = "https://raw.githubusercontent.com/innovationnorway/go-hello-world/master/docker-compose.yml"
 }
 
 module "web_app_container" {
@@ -152,7 +152,7 @@ module "web_app_container" {
 
   container_type = "docker"
 
-  container_image = "innovationnorway/python-hello-world:latest"
+  container_image = "innovationnorway/go-hello-world:latest"
 
   app_settings = {
     MESSAGE = "Hello World!"
@@ -177,7 +177,7 @@ module "web_app_container" {
 
   container_type = "docker"
 
-  container_image = "innovationnorway/python-hello-world:latest"
+  container_image = "innovationnorway/go-hello-world:latest"
 
   ip_restrictions = ["192.168.3.4/32", "192.168.2.0/24"]
 }
@@ -191,7 +191,7 @@ module "web_app_container" {
 | `resource_group_name` | `string` | The name of an existing resource group to use for the web app. |
 | `container_type` | `string` | Type of container. The options are: `docker`, `compose` and `kube`. Default: `docker`. |
 | `container_config` | `string` | Configuration for the container. This should be YAML. |
-| `container_image` | `string` | Container image name. Example: `innovationnorway/python-hello-world:latest`. |
+| `container_image` | `string` | Container image name. Example: `innovationnorway/go-hello-world:latest`. |
 | `port` | `string` | The value of the expected container port number. |
 | `enable_storage` | `bool` | Mount an SMB share to the `/home/` directory. Default: `false`. |
 | `start_time_limit` | `string` | Configure the amount of time (in seconds) the app service will wait before it restarts the container. Default: `230`. | 

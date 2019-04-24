@@ -17,7 +17,7 @@ module "web_app_container" {
 
   name = "hello-world"
 
-  resource_group_name = "${azurerm_resource_group.example.name}"
+  resource_group_name = azurerm_resource_group.example.name
 
   container_type = "docker"
 
@@ -38,7 +38,7 @@ module "web_app_container" {
 
   name = "hello-world"
 
-  resource_group_name = "${azurerm_resource_group.example.name}"
+  resource_group_name = azurerm_resource_group.example.name
 
   container_type = "compose"
 
@@ -68,7 +68,7 @@ module "web_app_container" {
 
   name = "hello-world"
 
-  resource_group_name = "${azurerm_resource_group.example.name}"
+  resource_group_name = azurerm_resource_group.example.name
 
   container_type = "kube"
 
@@ -102,11 +102,11 @@ module "web_app_container" {
 
   name = "hello-world"
 
-  resource_group_name = "${azurerm_resource_group.example.name}"
+  resource_group_name = azurerm_resource_group.example.name
 
   container_type = "kube"
 
-  container_config = "${file("kubernetes-pod.yaml")}"
+  container_config = file("kubernetes-pod.yaml")
 }
 ```
 
@@ -127,11 +127,11 @@ module "web_app_container" {
 
   name = "hello-world"
 
-  resource_group_name = "${azurerm_resource_group.example.name}"
+  resource_group_name = azurerm_resource_group.example.name
 
   container_type = "compose"
 
-  container_config = "${data.http.container_config.body}"
+  container_config = data.http.container_config.body
 }
 ```
 
@@ -148,7 +148,7 @@ module "web_app_container" {
 
   name = "hello-world"
 
-  resource_group_name = "${azurerm_resource_group.example.name}"
+  resource_group_name = azurerm_resource_group.example.name
 
   container_type = "docker"
 
@@ -173,7 +173,7 @@ module "web_app_container" {
 
   name = "hello-world"
 
-  resource_group_name = "${azurerm_resource_group.example.name}"
+  resource_group_name = azurerm_resource_group.example.name
 
   container_type = "docker"
 

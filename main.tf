@@ -1,9 +1,4 @@
 locals {
-  app_service_plan_id = var.app_service_plan_id != "" ? var.app_service_plan_id : element(coalescelist(azurerm_app_service_plan.main.*.id, [""]), 0)
-
-  container_type   = upper(var.container_type)
-  container_config = base64encode(var.container_config)
-
   app_settings = {
     "WEBSITES_CONTAINER_START_TIME_LIMIT" = var.start_time_limit
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = var.enable_storage
@@ -12,6 +7,19 @@ locals {
     "DOCKER_REGISTRY_SERVER_URL"          = var.docker_registry_url
     "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.docker_registry_password
   }
+  app_service_plan_id = coalesce(var.app_service_plan_id, azurerm_app_service_plan.main[0].id)
+
+  container_type   = upper(var.container_type)
+  container_config = base64encode(var.container_config)
+
+  supported_container_types = {
+    COMPOSE = true
+    DOCKER  = true
+    KUBE    = true
+  }
+  check_supported_container_types = local.supported_container_types[local.container_type]
+
+  linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
 }
 
 data "azurerm_resource_group" "main" {
@@ -47,7 +55,7 @@ resource "azurerm_app_service" "main" {
     app_command_line = var.command
     ftps_state       = var.ftps_state
     ip_restriction   = var.ip_restrictions
-    linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
+    linux_fx_version = local.linux_fx_version
   }
 
   app_settings = merge(var.app_settings, local.app_settings)

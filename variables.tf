@@ -124,7 +124,7 @@ variable "ftps_state" {
 }
 
 variable "ip_restrictions" {
-  type = list(string)
+  type = list(any)
 
   default = []
 

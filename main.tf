@@ -46,18 +46,7 @@ resource "azurerm_app_service" "main" {
     always_on        = var.always_on
     app_command_line = var.command
     ftps_state       = var.ftps_state
-    dynamic "ip_restriction" {
-      for_each = var.ip_restrictions
-      content {
-        # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-        # which keys might be set in maps assigned here, so it has
-        # produced a comprehensive set here. Consider simplifying
-        # this after confirming which keys can be set in practice.
-
-        ip_address  = lookup(ip_restriction.value, "ip_address", null)
-        subnet_mask = lookup(ip_restriction.value, "subnet_mask", null)
-      }
-    }
+    ip_restriction   = var.ip_restrictions
     linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
   }
 

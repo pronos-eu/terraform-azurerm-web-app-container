@@ -1,17 +1,17 @@
 variable "name" {
-  type = "string"
+  type = string
 
   description = "The name of the web app."
 }
 
 variable "resource_group_name" {
-  type = "string"
+  type = string
 
   description = "The name of an existing resource group to use for the web app."
 }
 
 variable "container_type" {
-  type = "string"
+  type = string
 
   default = "docker"
 
@@ -19,7 +19,7 @@ variable "container_type" {
 }
 
 variable "container_config" {
-  type = "string"
+  type = string
 
   default = ""
 
@@ -27,7 +27,7 @@ variable "container_config" {
 }
 
 variable "container_image" {
-  type = "string"
+  type = string
 
   default = ""
 
@@ -35,7 +35,7 @@ variable "container_image" {
 }
 
 variable "port" {
-  type = "string"
+  type = string
 
   default = ""
 
@@ -43,7 +43,7 @@ variable "port" {
 }
 
 variable "enable_storage" {
-  type = "string"
+  type = string
 
   default = "false"
 
@@ -51,7 +51,7 @@ variable "enable_storage" {
 }
 
 variable "start_time_limit" {
-  type = "string"
+  type = string
 
   default = "230"
 
@@ -59,7 +59,7 @@ variable "start_time_limit" {
 }
 
 variable "command" {
-  type = "string"
+  type = string
 
   default = ""
 
@@ -67,15 +67,16 @@ variable "command" {
 }
 
 variable "app_settings" {
-  type = "map"
+  type = map(string)
 
-  default = {}
+  default = {
+  }
 
   description = "Set web app settings. These are avilable as environment variables at runtime."
 }
 
 variable "app_service_plan_id" {
-  type = "string"
+  type = string
 
   default = ""
 
@@ -83,7 +84,7 @@ variable "app_service_plan_id" {
 }
 
 variable "sku_tier" {
-  type = "string"
+  type = string
 
   default = "Standard"
 
@@ -91,7 +92,7 @@ variable "sku_tier" {
 }
 
 variable "sku_size" {
-  type = "string"
+  type = string
 
   default = "S1"
 
@@ -99,7 +100,7 @@ variable "sku_size" {
 }
 
 variable "always_on" {
-  type = "string"
+  type = string
 
   default = true
 
@@ -107,7 +108,7 @@ variable "always_on" {
 }
 
 variable "https_only" {
-  type = "string"
+  type = string
 
   default = true
 
@@ -115,7 +116,7 @@ variable "https_only" {
 }
 
 variable "ftps_state" {
-  type = "string"
+  type = string
 
   default = "Disabled"
 
@@ -123,7 +124,7 @@ variable "ftps_state" {
 }
 
 variable "ip_restrictions" {
-  type = "list"
+  type = list(string)
 
   default = []
 
@@ -131,7 +132,7 @@ variable "ip_restrictions" {
 }
 
 variable "custom_hostnames" {
-  type = "list"
+  type = list(string)
 
   default = []
 
@@ -139,7 +140,7 @@ variable "custom_hostnames" {
 }
 
 variable "docker_registry_username" {
-  type = "string"
+  type = string
 
   default = ""
 
@@ -147,7 +148,7 @@ variable "docker_registry_username" {
 }
 
 variable "docker_registry_url" {
-  type = "string"
+  type = string
 
   default = "https://index.docker.io"
 
@@ -155,7 +156,7 @@ variable "docker_registry_url" {
 }
 
 variable "docker_registry_password" {
-  type = "string"
+  type = string
 
   default = ""
 
@@ -163,9 +164,11 @@ variable "docker_registry_password" {
 }
 
 variable "tags" {
-  type = "map"
+  type = map(string)
 
-  default = {}
+  default = {
+  }
 
   description = "A mapping of tags to assign to the web app."
 }
+

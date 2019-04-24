@@ -62,16 +62,10 @@ variable "app_service_plan_id" {
   description = "The ID of an existing app service plan to use for the web app."
 }
 
-variable "sku_tier" {
+variable "sku" {
   type        = string
-  default     = "Standard"
-  description = "The pricing tier of an app service plan to use for the web app."
-}
-
-variable "sku_size" {
-  type        = string
-  default     = "S1"
-  description = "The instance size of an app service plan to use for the web app."
+  default     = "Standard_S1"
+  description = "The SKU of an app service plan to use for the web app."
 }
 
 variable "always_on" {

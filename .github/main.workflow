@@ -4,8 +4,8 @@ workflow "Terraform" {
 }
 
 action "terraform-fmt" {
-  uses = "innovationnorway/github-action-terraform@master"
-  args = ["fmt", "-check", "-list", "-no-color"]
+  uses = "innovationnorway/github-action-terraform@v0.12.0-beta1"
+  args = ["fmt", "-check", "-list", "-recursive"]
 }
 
 workflow "Semantic Release" {

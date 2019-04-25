@@ -197,8 +197,8 @@ module "web_app_container" {
 | `start_time_limit` | `string` | Configure the amount of time (in seconds) the app service will wait before it restarts the container. Default: `230`. | 
 | `command` | `string` | A command to be run on the container. |
 | `app_settings` | `map` | Set web app settings. These are avilable as environment variables at runtime. |
-| `app_service_plan_id` | `string` | The ID of an existing app service plan to use for the web app. |
-| `sku` | `string` | The SKU of an app service plan to use for the web app. Default: `Standard_S1`. |
+| `app_service_plan_id` | `string` | The ID of an existing app service plan to use for the web app. Either this or `sku` should be specified. |
+| `sku` | `string` | The SKU of an app service plan to create for the web app. The options are: `Basic_B1`, `Basic_B2`, `Basic_B3`, `Standard_S1`, `Standard_S2`, `Standard_S3`, `PremiumV2_P1V2`, `PremiumV2_P2V2`, and `PremiumV2_P3V2`. Default: `Basic_B1`. |
 | `always_on` | `bool` | Either `true` to ensure the web app gets loaded all the time, or `false` to to unload after being idle. |
 | `https_only` | `bool` | Redirect all traffic made to the web app using HTTP to HTTPS. Default: `true`. |
 | `ftps_state` | `string` | Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`. Default: `Disabled`. |

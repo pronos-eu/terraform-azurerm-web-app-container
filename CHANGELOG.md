@@ -1,3 +1,22 @@
+# [2.0.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.5.0...v2.0.0) (2019-04-25)
+
+
+### Bug Fixes
+
+* dynamic blocks of `ip_restriction` not expected here ([015a188](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/015a188))
+
+
+### Features
+
+* flatten `ip_restrictions` argument ([70e0faf](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/70e0faf))
+* flatten SKU into single argument ([44207a8](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/44207a8))
+* rewrite module source code for v0.12 ([2d8457f](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/2d8457f))
+
+
+### BREAKING CHANGES
+
+* module has been upgraded to use Terraform v0.12-only features.
+
 # [1.5.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.4.0...v1.5.0) (2019-04-11)
 
 

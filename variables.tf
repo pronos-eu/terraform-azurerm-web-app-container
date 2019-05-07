@@ -53,13 +53,25 @@ variable "command" {
 variable "app_settings" {
   type        = map(string)
   default     = {}
-  description = "Set web app settings. These are avilable as environment variables at runtime."
+  description = "Set app settings. These are avilable as environment variables at runtime."
+}
+
+variable "secure_app_settings" {
+  type        = map(string)
+  default     = {}
+  description = "Set sensitive app settings. Uses Key Vault references as values for app settings."
 }
 
 variable "app_service_plan_id" {
   type        = string
   default     = ""
   description = "The ID of an existing app service plan to use for the web app."
+}
+
+variable "key_vault_id" {
+  type        = string
+  default     = ""
+  description = "The ID of an existing Key Vault. Required if `secure_app_settings` is set."
 }
 
 variable "sku" {

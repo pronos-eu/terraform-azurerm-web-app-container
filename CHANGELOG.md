@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.0.0...v2.1.0) (2019-05-07)
+
+
+### Bug Fixes
+
+* secret name can only contain alphanumeric characters and dashes ([4755133](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/4755133))
+
+
+### Features
+
+* add `secure_app_settings` and `key_vault_id` arguments ([6616a4c](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/6616a4c))
+
 # [2.0.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v1.5.0...v2.0.0) (2019-04-25)
 
 

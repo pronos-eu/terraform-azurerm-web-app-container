@@ -30,7 +30,7 @@ locals {
 
   key_vault_secrets = [
     for name, value in var.secure_app_settings : {
-      name  = replace(name, "/_|\\//", "-")
+      name  = replace(name, "/[^a-zA-Z0-9-]/", "-")
       value = value
     }
   ]

@@ -160,6 +160,33 @@ module "web_app_container" {
 }
 ```
 
+### Set sensitive environment variables (App Settings from Key Vault)
+
+```hcl
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "westeurope"
+}
+
+module "web_app_container" {
+  source = "innovationnorway/web-app-container/azurerm"
+
+  name = "hello-world"
+
+  resource_group_name = azurerm_resource_group.example.name
+
+  container_type = "docker"
+
+  container_image = "innovationnorway/go-hello-world:latest"
+
+  key_vault_id = azurerm_key_vault.example.id
+
+  secure_app_settings = {
+    MESSAGE = "Hello World!"
+  }
+}
+```
+
 ### Configure IP restrictions
 
 ```hcl
@@ -196,8 +223,10 @@ module "web_app_container" {
 | `enable_storage` | `bool` | Mount an SMB share to the `/home/` directory. Default: `false`. |
 | `start_time_limit` | `string` | Configure the amount of time (in seconds) the app service will wait before it restarts the container. Default: `230`. | 
 | `command` | `string` | A command to be run on the container. |
-| `app_settings` | `map` | Set web app settings. These are avilable as environment variables at runtime. |
+| `app_settings` | `map` | Set app settings. These are avilable as environment variables at runtime. |
+| `secure_app_settings` | `map` | Set sensitive app settings. Uses Key Vault references as values for app settings. |
 | `app_service_plan_id` | `string` | The ID of an existing app service plan to use for the web app. Either this or `sku` should be specified. |
+| `key_vault_id` | `string` | The ID of an existing Key Vault. Required if `secure_app_settings` is set. |
 | `sku` | `string` | The SKU of an app service plan to create for the web app. The options are: `Basic_B1`, `Basic_B2`, `Basic_B3`, `Standard_S1`, `Standard_S2`, `Standard_S3`, `PremiumV2_P1v2`, `PremiumV2_P2v2`, and `PremiumV2_P3v2`. Default: `Basic_B1`. |
 | `always_on` | `bool` | Either `true` to ensure the web app gets loaded all the time, or `false` to to unload after being idle. |
 | `https_only` | `bool` | Redirect all traffic made to the web app using HTTP to HTTPS. Default: `true`. |

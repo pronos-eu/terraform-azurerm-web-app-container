@@ -4,22 +4,16 @@ workflow "Terraform" {
 }
 
 action "terraform-fmt" {
-  uses = "innovationnorway/github-action-terraform@v0.12.0-beta1"
+  uses = "innovationnorway/terraform-action@master"
   args = ["fmt", "-check", "-list", "-recursive"]
 }
 
-workflow "Semantic Release" {
+workflow "Release" {
   on = "push"
   resolves = ["semantic-release"]
 }
 
-action "filter-master-branch" {
-  uses = "actions/bin/filter@master"
-  args = "branch master"
-}
-
 action "semantic-release" {
-  uses = "innovationnorway/github-action-semantic-release@master"
-  needs = "filter-master-branch"
+  uses = "innovationnorway/semantic-release-action@master"
   secrets = ["GH_TOKEN"]
 }

@@ -14,6 +14,6 @@ workflow "Release" {
 }
 
 action "semantic-release" {
-  uses = "innovationnorway/semantic-release-action@master"
+  uses = "innovationnorway/semantic-release-action@beta"
   secrets = ["GH_TOKEN"]
 }

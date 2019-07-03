@@ -74,12 +74,6 @@ variable "key_vault_id" {
   description = "The ID of an existing Key Vault. Required if `secure_app_settings` is set."
 }
 
-variable "sku" {
-  type        = string
-  default     = "Basic_B1"
-  description = "The SKU of an app service plan to create for the web app."
-}
-
 variable "always_on" {
   type        = bool
   default     = true
@@ -126,6 +120,12 @@ variable "docker_registry_password" {
   type        = string
   default     = ""
   description = "The container registry password."
+}
+
+variable "plan" {
+  type        = map(string)
+  default     = {}
+  description = "A map of app service plan properties."
 }
 
 variable "tags" {

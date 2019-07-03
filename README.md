@@ -225,9 +225,8 @@ module "web_app_container" {
 | `command` | `string` | A command to be run on the container. |
 | `app_settings` | `map` | Set app settings. These are avilable as environment variables at runtime. |
 | `secure_app_settings` | `map` | Set sensitive app settings. Uses Key Vault references as values for app settings. |
-| `app_service_plan_id` | `string` | The ID of an existing app service plan to use for the web app. Either this or `sku` should be specified. |
+| `plan` | `map` | A map of app service plan properties. |
 | `key_vault_id` | `string` | The ID of an existing Key Vault. Required if `secure_app_settings` is set. |
-| `sku` | `string` | The SKU of an app service plan to create for the web app. The options are: `Basic_B1`, `Basic_B2`, `Basic_B3`, `Standard_S1`, `Standard_S2`, `Standard_S3`, `PremiumV2_P1v2`, `PremiumV2_P2v2`, and `PremiumV2_P3v2`. Default: `Basic_B1`. |
 | `always_on` | `bool` | Either `true` to ensure the web app gets loaded all the time, or `false` to to unload after being idle. |
 | `https_only` | `bool` | Redirect all traffic made to the web app using HTTP to HTTPS. Default: `true`. |
 | `ftps_state` | `string` | Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`. Default: `Disabled`. |
@@ -237,3 +236,11 @@ module "web_app_container" {
 | `docker_registry_url` | `string` | The container registry url. Default: `https://index.docker.io` |
 | `docker_registry_password` | `string` | The container registry password. |
 | `tags` | `map` | A mapping of tags to assign to the web app. |
+
+The `plan` object accepts the following keys:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | The ID of an existing app service plan. |
+| `name` | `string` | The name of a new app service plan. |
+| `sku` | `string` | The SKU size of a new app service plan. The options are: `B1` (Basic Small), `B2` (Basic Medium), `B3` (Basic Large), `S1` (Standard Small), `S2` (Standard Medium), `S3` (Standard Large), `P1v2` (PremiumV2 Small), `P2v2` (PremiumV2 Medium), `P3v2` (PremiumV2 Large). Default: `B1` (Free). |

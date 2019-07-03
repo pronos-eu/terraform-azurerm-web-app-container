@@ -243,4 +243,4 @@ The `plan` object accepts the following keys:
 | --- | --- | --- |
 | `id` | `string` | The ID of an existing app service plan. |
 | `name` | `string` | The name of a new app service plan. |
-| `sku` | `string` | The SKU size of a new app service plan. The options are: `B1` (Basic Small), `B2` (Basic Medium), `B3` (Basic Large), `S1` (Standard Small), `S2` (Standard Medium), `S3` (Standard Large), `P1v2` (PremiumV2 Small), `P2v2` (PremiumV2 Medium), `P3v2` (PremiumV2 Large). Default: `B1` (Free). |
+| `sku` | `string` | The SKU size of a new app service plan. The options are: `B1` (Basic Small), `B2` (Basic Medium), `B3` (Basic Large), `S1` (Standard Small), `S2` (Standard Medium), `S3` (Standard Large), `P1v2` (PremiumV2 Small), `P2v2` (PremiumV2 Medium), `P3v2` (PremiumV2 Large). Default: `B1`. |

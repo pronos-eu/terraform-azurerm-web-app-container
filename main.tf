@@ -94,6 +94,8 @@ resource "azurerm_app_service" "main" {
   resource_group_name = data.azurerm_resource_group.main.name
   app_service_plan_id = local.plan_id
 
+  client_affinity_enabled = false
+
   https_only = var.https_only
 
   site_config {

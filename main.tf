@@ -7,7 +7,6 @@ locals {
     "DOCKER_REGISTRY_SERVER_URL"          = var.docker_registry_url
     "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.docker_registry_password
   }
-  app_service_plan_id = coalesce(var.app_service_plan_id, azurerm_app_service_plan.main[0].id)
 
   container_type   = upper(var.container_type)
   container_config = base64encode(var.container_config)
@@ -39,6 +38,34 @@ locals {
     for secret in azurerm_key_vault_secret.main :
     replace(secret.name, "-", "_") => format("@Microsoft.KeyVault(SecretUri=%s)", secret.id)
   }
+
+  default_plan_name = format("%s-plan", var.name)
+
+  plan = merge({
+    id   = ""
+    name = ""
+    sku  = "B1"
+  }, var.plan)
+
+  plan_id = coalesce(local.plan.id, azurerm_app_service_plan.main[0].id)
+
+  sku_tier_sizes = {
+    "Basic"     = ["B1", "B2", "B3"]
+    "Standard"  = ["S1", "S2", "S3"]
+    "Premium"   = ["P1", "P2", "P3"]
+    "PremiumV2" = ["P1v2", "P2v2", "P3v2"]
+  }
+
+  flattened_skus = flatten([
+    for tier, sizes in local.sku_tier_sizes : [
+      for size in sizes : {
+        tier = tier
+        size = size
+      }
+    ]
+  ])
+
+  sku_tiers = { for sku in local.flattened_skus : sku.size => sku.tier }
 }
 
 data "azurerm_resource_group" "main" {
@@ -46,16 +73,16 @@ data "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_app_service_plan" "main" {
-  count               = var.app_service_plan_id == "" ? 1 : 0
-  name                = "${var.name}-plan"
+  count               = local.plan.id == "" ? 1 : 0
+  name                = coalesce(local.plan.name, local.default_plan_name)
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   kind                = "linux"
   reserved            = true
 
   sku {
-    tier = split("_", var.sku)[0]
-    size = split("_", var.sku)[1]
+    tier = local.sku_tiers[local.plan.sku]
+    size = local.plan.sku
   }
 
   tags = var.tags
@@ -65,7 +92,9 @@ resource "azurerm_app_service" "main" {
   name                = var.name
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
-  app_service_plan_id = local.app_service_plan_id
+  app_service_plan_id = local.plan_id
+
+  client_affinity_enabled = false
 
   https_only = var.https_only
 

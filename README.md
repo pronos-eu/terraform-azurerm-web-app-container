@@ -150,8 +150,6 @@ module "web_app_container" {
 
   resource_group_name = azurerm_resource_group.example.name
 
-  container_type = "docker"
-
   container_image = "innovationnorway/go-hello-world:latest"
 
   app_settings = {
@@ -174,8 +172,6 @@ module "web_app_container" {
   name = "hello-world"
 
   resource_group_name = azurerm_resource_group.example.name
-
-  container_type = "docker"
 
   container_image = "innovationnorway/go-hello-world:latest"
 
@@ -201,8 +197,6 @@ module "web_app_container" {
   name = "hello-world"
 
   resource_group_name = azurerm_resource_group.example.name
-
-  container_type = "docker"
 
   container_image = "innovationnorway/go-hello-world:latest"
 

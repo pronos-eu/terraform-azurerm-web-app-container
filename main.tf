@@ -29,11 +29,13 @@ resource "azurerm_app_service" "main" {
   https_only = var.https_only
 
   site_config {
-    always_on        = var.always_on
+    always_on        = local.always_on
     app_command_line = var.command
     ftps_state       = var.ftps_state
     ip_restriction   = local.ip_restrictions
     linux_fx_version = local.linux_fx_version
+
+    use_32_bit_worker_process = local.use_32_bit_worker_process
   }
 
   app_settings = merge(var.app_settings, local.secure_app_settings, local.app_settings)

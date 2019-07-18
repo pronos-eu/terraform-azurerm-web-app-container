@@ -20,6 +20,15 @@ module "web_app_container" {
   resource_group_name = azurerm_resource_group.test.name
 
   container_image = "innovationnorway/go-hello-world"
+
+  plan = {
+    sku_size = "B1"
+  }
+}
+
+data "azurerm_app_service" "test" {
+  name                = module.web_app_container.name
+  resource_group_name = azurerm_resource_group.test.name
 }
 
 data "http" "test" {
@@ -33,6 +42,11 @@ module "test_assertions" {
       name = "has expected content"
       got  = chomp(data.http.test.body)
       want = "Hello, world!"
+    },
+    {
+      name = "is loaded at all times"
+      got  = data.azurerm_app_service.test.site_config.0.always_on
+      want = true
     }
   ]
 }

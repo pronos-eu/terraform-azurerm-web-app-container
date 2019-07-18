@@ -174,26 +174,33 @@ locals {
   plan = merge({
     id       = ""
     name     = ""
-    sku_size = "B1"
+    sku_size = "F1"
   }, var.plan)
 
   plan_id = coalesce(local.plan.id, azurerm_app_service_plan.main[0].id)
 
-  sku_tier_sizes = {
+  # FIXME: create a data source that exports list of all SKUs.
+  sku_map = {
+    "Free"      = ["F1", "Free"]
+    "Shared"    = ["D1", "Shared"]
     "Basic"     = ["B1", "B2", "B3"]
     "Standard"  = ["S1", "S2", "S3"]
     "Premium"   = ["P1", "P2", "P3"]
     "PremiumV2" = ["P1v2", "P2v2", "P3v2"]
   }
-
-  flattened_skus = flatten([
-    for tier, sizes in local.sku_tier_sizes : [
+  skus = flatten([
+    for tier, sizes in local.sku_map : [
       for size in sizes : {
         tier = tier
         size = size
       }
     ]
   ])
+  sku_tiers = { for sku in local.skus : sku.size => sku.tier }
 
-  sku_tiers = { for sku in local.flattened_skus : sku.size => sku.tier }
+  is_shared = contains(["F1", "FREE", "D1", "SHARED"], upper(local.plan.sku_size))
+
+  always_on = local.is_shared ? false : true
+
+  use_32_bit_worker_process = local.is_shared ? true : false
 }

@@ -11,8 +11,8 @@ resource "azurerm_app_service_plan" "main" {
   reserved            = true
 
   sku {
-    tier = local.sku_tiers[local.plan.sku]
-    size = local.plan.sku
+    tier = local.sku_tiers[local.plan.sku_size]
+    size = local.plan.sku_size
   }
 
   tags = var.tags

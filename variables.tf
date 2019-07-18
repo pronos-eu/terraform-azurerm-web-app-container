@@ -172,9 +172,9 @@ locals {
   default_plan_name = format("%s-plan", var.name)
 
   plan = merge({
-    id   = ""
-    name = ""
-    sku  = "B1"
+    id       = ""
+    name     = ""
+    sku_size = "B1"
   }, var.plan)
 
   plan_id = coalesce(local.plan.id, azurerm_app_service_plan.main[0].id)

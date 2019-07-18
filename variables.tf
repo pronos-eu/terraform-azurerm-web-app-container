@@ -62,12 +62,6 @@ variable "secure_app_settings" {
   description = "Set sensitive app settings. Uses Key Vault references as values for app settings."
 }
 
-variable "app_service_plan_id" {
-  type        = string
-  default     = ""
-  description = "The ID of an existing app service plan to use for the web app."
-}
-
 variable "key_vault_id" {
   type        = string
   default     = ""

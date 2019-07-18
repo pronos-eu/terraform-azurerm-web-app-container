@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.1.0...v2.2.0) (2019-07-18)
+
+
+### Bug Fixes
+
+* turn off affinity cookie ([112b87d](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/112b87d))
+
+
+### Features
+
+* add `plan` argument ([dcde5be](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/dcde5be))
+
 # [2.1.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.0.0...v2.1.0) (2019-05-07)
 
 

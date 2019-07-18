@@ -28,7 +28,7 @@ variable "container_image" {
 
 variable "port" {
   type        = string
-  default     = ""
+  default     = null
   description = "The value of the expected container port number."
 }
 
@@ -100,7 +100,7 @@ variable "custom_hostnames" {
 
 variable "docker_registry_username" {
   type        = string
-  default     = ""
+  default     = null
   description = "The container registry username."
 }
 
@@ -112,7 +112,7 @@ variable "docker_registry_url" {
 
 variable "docker_registry_password" {
   type        = string
-  default     = ""
+  default     = null
   description = "The container registry password."
 }
 

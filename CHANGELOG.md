@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.2.0...v2.2.1) (2019-07-18)
+
+
+### Bug Fixes
+
+* web app must be created only after the secret has been created ([9d43f24](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/9d43f24))
+
 # [2.2.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.1.0...v2.2.0) (2019-07-18)
 
 

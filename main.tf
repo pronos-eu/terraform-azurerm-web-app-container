@@ -113,6 +113,8 @@ resource "azurerm_app_service" "main" {
   }
 
   tags = var.tags
+
+  depends_on = [azurerm_key_vault_secret.main]
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "main" {

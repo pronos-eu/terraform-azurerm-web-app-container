@@ -1,3 +1,16 @@
+# [2.3.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.2.1...v2.3.0) (2019-07-18)
+
+
+### Bug Fixes
+
+* omit empty app settings by changing variable defaults to `null` ([8b9e784](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/8b9e784))
+* rename `sku` to `sku_size` in `plan` ([7f39467](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/7f39467))
+
+
+### Features
+
+* add support for free and shared plans ([8c23c3b](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/8c23c3b))
+
 ## [2.2.1](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.2.0...v2.2.1) (2019-07-18)
 
 

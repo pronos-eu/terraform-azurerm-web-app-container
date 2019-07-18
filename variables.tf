@@ -28,7 +28,7 @@ variable "container_image" {
 
 variable "port" {
   type        = string
-  default     = ""
+  default     = null
   description = "The value of the expected container port number."
 }
 
@@ -60,12 +60,6 @@ variable "secure_app_settings" {
   type        = map(string)
   default     = {}
   description = "Set sensitive app settings. Uses Key Vault references as values for app settings."
-}
-
-variable "app_service_plan_id" {
-  type        = string
-  default     = ""
-  description = "The ID of an existing app service plan to use for the web app."
 }
 
 variable "key_vault_id" {
@@ -106,7 +100,7 @@ variable "custom_hostnames" {
 
 variable "docker_registry_username" {
   type        = string
-  default     = ""
+  default     = null
   description = "The container registry username."
 }
 
@@ -118,7 +112,7 @@ variable "docker_registry_url" {
 
 variable "docker_registry_password" {
   type        = string
-  default     = ""
+  default     = null
   description = "The container registry password."
 }
 
@@ -134,3 +128,79 @@ variable "tags" {
   description = "A mapping of tags to assign to the web app."
 }
 
+locals {
+  app_settings = {
+    "WEBSITES_CONTAINER_START_TIME_LIMIT" = var.start_time_limit
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = var.enable_storage
+    "WEBSITES_PORT"                       = var.port
+    "DOCKER_REGISTRY_SERVER_USERNAME"     = var.docker_registry_username
+    "DOCKER_REGISTRY_SERVER_URL"          = var.docker_registry_url
+    "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.docker_registry_password
+  }
+
+  container_type   = upper(var.container_type)
+  container_config = base64encode(var.container_config)
+
+  supported_container_types = {
+    COMPOSE = true
+    DOCKER  = true
+    KUBE    = true
+  }
+  check_supported_container_types = local.supported_container_types[local.container_type]
+
+  linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
+
+  ip_restrictions = [
+    for prefix in var.ip_restrictions : {
+      ip_address  = split("/", prefix)[0]
+      subnet_mask = cidrnetmask(prefix)
+    }
+  ]
+
+  key_vault_secrets = [
+    for name, value in var.secure_app_settings : {
+      name  = replace(name, "/[^a-zA-Z0-9-]/", "-")
+      value = value
+    }
+  ]
+
+  secure_app_settings = {
+    for secret in azurerm_key_vault_secret.main :
+    replace(secret.name, "-", "_") => format("@Microsoft.KeyVault(SecretUri=%s)", secret.id)
+  }
+
+  default_plan_name = format("%s-plan", var.name)
+
+  plan = merge({
+    id       = ""
+    name     = ""
+    sku_size = "F1"
+  }, var.plan)
+
+  plan_id = coalesce(local.plan.id, azurerm_app_service_plan.main[0].id)
+
+  # FIXME: create a data source that exports list of all SKUs.
+  sku_map = {
+    "Free"      = ["F1", "Free"]
+    "Shared"    = ["D1", "Shared"]
+    "Basic"     = ["B1", "B2", "B3"]
+    "Standard"  = ["S1", "S2", "S3"]
+    "Premium"   = ["P1", "P2", "P3"]
+    "PremiumV2" = ["P1v2", "P2v2", "P3v2"]
+  }
+  skus = flatten([
+    for tier, sizes in local.sku_map : [
+      for size in sizes : {
+        tier = tier
+        size = size
+      }
+    ]
+  ])
+  sku_tiers = { for sku in local.skus : sku.size => sku.tier }
+
+  is_shared = contains(["F1", "FREE", "D1", "SHARED"], upper(local.plan.sku_size))
+
+  always_on = local.is_shared ? false : true
+
+  use_32_bit_worker_process = local.is_shared ? true : false
+}

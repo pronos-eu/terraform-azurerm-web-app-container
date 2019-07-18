@@ -210,6 +210,7 @@ module "web_app_container" {
 | --- | --- | --- |
 | `name` | `string` | The name of the web app. |
 | `resource_group_name` | `string` | The name of an existing resource group to use for the web app. |
+| `plan` | `object` | App Service plan properties. This should be `plan` object. |
 | `container_type` | `string` | Type of container. The options are: `docker`, `compose` and `kube`. Default: `docker`. |
 | `container_config` | `string` | Configuration for the container. This should be YAML. |
 | `container_image` | `string` | Container image name. Example: `innovationnorway/go-hello-world:latest`. |
@@ -219,9 +220,7 @@ module "web_app_container" {
 | `command` | `string` | A command to be run on the container. |
 | `app_settings` | `map` | Set app settings. These are avilable as environment variables at runtime. |
 | `secure_app_settings` | `map` | Set sensitive app settings. Uses Key Vault references as values for app settings. |
-| `plan` | `map` | A map of app service plan properties. |
 | `key_vault_id` | `string` | The ID of an existing Key Vault. Required if `secure_app_settings` is set. |
-| `always_on` | `bool` | Either `true` to ensure the web app gets loaded all the time, or `false` to to unload after being idle. |
 | `https_only` | `bool` | Redirect all traffic made to the web app using HTTP to HTTPS. Default: `true`. |
 | `ftps_state` | `string` | Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`. Default: `Disabled`. |
 | `ip_restrictions` | `list` | A list of IP addresses in CIDR format specifying Access Restrictions. |
@@ -237,4 +236,16 @@ The `plan` object accepts the following keys:
 | --- | --- | --- |
 | `id` | `string` | The ID of an existing app service plan. |
 | `name` | `string` | The name of a new app service plan. |
-| `sku` | `string` | The SKU size of a new app service plan. The options are: `B1` (Basic Small), `B2` (Basic Medium), `B3` (Basic Large), `S1` (Standard Small), `S2` (Standard Medium), `S3` (Standard Large), `P1v2` (PremiumV2 Small), `P2v2` (PremiumV2 Medium), `P3v2` (PremiumV2 Large). Default: `B1`. |
+| `sku_size` | `string` | The SKU size of a new app service plan. The options are: `F1`, `D1`, `B1`, `B2`, `B3`, `S1`, `S2`, `S3`, `P1v2`, `P2v2`, `P3v2`. Default: `F1`. |
+
+List of SKU sizes: 
+
+| Size | Tier | Description |
+| --- | --- | --- |
+| `F1`, `Free` | Free | Free |
+| `D1`, `Shared` | Shared | Shared |
+| `B1`, `B2`, `B3` | Basic | Small, Medium, Large |
+| `S1`, `S2`, `S3` | Standard | Small, Medium, Large |
+| `P1v2`, `P2v2`, `P3v2` | PremiumV2 | Small, Medium, Large |
+
+Read more about [App Service plans](https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans).

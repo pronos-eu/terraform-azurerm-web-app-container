@@ -128,3 +128,72 @@ variable "tags" {
   description = "A mapping of tags to assign to the web app."
 }
 
+locals {
+  app_settings = {
+    "WEBSITES_CONTAINER_START_TIME_LIMIT" = var.start_time_limit
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = var.enable_storage
+    "WEBSITES_PORT"                       = var.port
+    "DOCKER_REGISTRY_SERVER_USERNAME"     = var.docker_registry_username
+    "DOCKER_REGISTRY_SERVER_URL"          = var.docker_registry_url
+    "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.docker_registry_password
+  }
+
+  container_type   = upper(var.container_type)
+  container_config = base64encode(var.container_config)
+
+  supported_container_types = {
+    COMPOSE = true
+    DOCKER  = true
+    KUBE    = true
+  }
+  check_supported_container_types = local.supported_container_types[local.container_type]
+
+  linux_fx_version = "${local.container_type}|${local.container_type == "DOCKER" ? var.container_image : local.container_config}"
+
+  ip_restrictions = [
+    for prefix in var.ip_restrictions : {
+      ip_address  = split("/", prefix)[0]
+      subnet_mask = cidrnetmask(prefix)
+    }
+  ]
+
+  key_vault_secrets = [
+    for name, value in var.secure_app_settings : {
+      name  = replace(name, "/[^a-zA-Z0-9-]/", "-")
+      value = value
+    }
+  ]
+
+  secure_app_settings = {
+    for secret in azurerm_key_vault_secret.main :
+    replace(secret.name, "-", "_") => format("@Microsoft.KeyVault(SecretUri=%s)", secret.id)
+  }
+
+  default_plan_name = format("%s-plan", var.name)
+
+  plan = merge({
+    id   = ""
+    name = ""
+    sku  = "B1"
+  }, var.plan)
+
+  plan_id = coalesce(local.plan.id, azurerm_app_service_plan.main[0].id)
+
+  sku_tier_sizes = {
+    "Basic"     = ["B1", "B2", "B3"]
+    "Standard"  = ["S1", "S2", "S3"]
+    "Premium"   = ["P1", "P2", "P3"]
+    "PremiumV2" = ["P1v2", "P2v2", "P3v2"]
+  }
+
+  flattened_skus = flatten([
+    for tier, sizes in local.sku_tier_sizes : [
+      for size in sizes : {
+        tier = tier
+        size = size
+      }
+    ]
+  ])
+
+  sku_tiers = { for sku in local.flattened_skus : sku.size => sku.tier }
+}

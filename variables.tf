@@ -122,6 +122,12 @@ variable "plan" {
   description = "A map of app service plan properties."
 }
 
+variable "auth" {
+  type        = any
+  default     = {}
+  description = "Auth settings for the web app. This should be `auth` object."
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}
@@ -203,4 +209,14 @@ locals {
   always_on = local.is_shared ? false : true
 
   use_32_bit_worker_process = local.is_shared ? true : false
+
+  auth = merge({
+    enabled = false
+    active_directory = {
+      client_id     = ""
+      client_secret = ""
+    }
+    token_store_enabled = true
+  }, var.auth)
+
 }

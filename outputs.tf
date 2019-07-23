@@ -30,8 +30,10 @@ output "plan" {
   description = "A mapping of App Service plan properties."
 }
 
-output "principal_id" {
-  value       = azurerm_app_service.main.identity[0].principal_id
-  description = "The principal ID for the system-assigned identity associated with the App Service."
+output "identity" {
+  value = {
+    principal_id = azurerm_app_service.main.identity[0].principal_id
+    ids          = azurerm_app_service.main.identity[0].identity_ids
+  }
+  description = "A mapping og identity properties for the web app."
 }
-

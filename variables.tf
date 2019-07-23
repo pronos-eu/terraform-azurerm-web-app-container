@@ -122,6 +122,12 @@ variable "plan" {
   description = "A map of app service plan properties."
 }
 
+variable "identity" {
+  type        = any
+  default     = {}
+  description = "Managed service identity properties."
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}
@@ -203,4 +209,9 @@ locals {
   always_on = local.is_shared ? false : true
 
   use_32_bit_worker_process = local.is_shared ? true : false
+
+  identity = merge({
+    enabled = true
+    ids     = null
+  }, var.identity)
 }

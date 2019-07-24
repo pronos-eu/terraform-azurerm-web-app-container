@@ -1,3 +1,5 @@
+data "azurerm_client_config" "main" {}
+
 data "azurerm_resource_group" "main" {
   name = var.resource_group_name
 }
@@ -46,6 +48,46 @@ resource "azurerm_app_service" "main" {
       "None"
     )
     identity_ids = local.identity.ids
+  }
+
+  dynamic "storage_account" {
+    for_each = local.storage_mounts
+    iterator = s
+
+    content {
+      name         = s.value.name
+      type         = s.value.share_name != "" ? "AzureFiles" : "AzureBlob"
+      account_name = s.value.account_name
+      share_name   = s.value.share_name != "" ? s.value.share_name : s.value.container_name
+      access_key   = s.value.access_key
+      mount_path   = s.value.mount_path
+    }
+  }
+
+  dynamic "auth_settings" {
+    for_each = local.auth.enabled ? [local.auth] : []
+
+    content {
+      enabled             = auth_settings.value.enabled
+      issuer              = format("https://sts.windows.net/%s/", data.azurerm_client_config.main.tenant_id)
+      token_store_enabled = local.auth.token_store_enabled
+      additional_login_params = {
+        response_type = "code id_token"
+        resource      = local.auth.active_directory.client_id
+      }
+      default_provider = "AzureActiveDirectory"
+
+      dynamic "active_directory" {
+        for_each = [auth_settings.value.active_directory]
+
+        content {
+          client_id     = active_directory.value.client_id
+          client_secret = active_directory.value.client_secret
+          allowed_audiences = formatlist("https://%s", concat(
+          [format("%s.azurewebsites.net", var.name)], var.custom_hostnames))
+        }
+      }
+    }
   }
 
   tags = var.tags

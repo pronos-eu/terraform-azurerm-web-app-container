@@ -226,9 +226,11 @@ module "web_app_container" {
 | `ip_restrictions` | `list` | A list of IP addresses in CIDR format specifying Access Restrictions. |
 | `custom_hostnames` | `list` | List of custom hostnames to use for the web app. |
 | `identity` | `object` | Managed service identity properties. This should be `identity` object. |
+| `auth` | `object` | Auth settings for the web app. This should be `auth` object. |
 | `docker_registry_username` | `string` | The container registry username. |
 | `docker_registry_url` | `string` | The container registry url. Default: `https://index.docker.io` |
 | `docker_registry_password` | `string` | The container registry password. |
+| `storage_mounts` | `list` | List of storage mounts for the web app. |
 | `tags` | `map` | A mapping of tags to assign to the web app. |
 
 The `plan` object accepts the following keys:
@@ -239,7 +241,7 @@ The `plan` object accepts the following keys:
 | `name` | `string` | The name of a new app service plan. |
 | `sku_size` | `string` | The SKU size of a new app service plan. The options are: `F1`, `D1`, `B1`, `B2`, `B3`, `S1`, `S2`, `S3`, `P1v2`, `P2v2`, `P3v2`. Default: `F1`. |
 
-List of SKU sizes: 
+The `sku_size` parameter can be one of the following:
 
 | Size | Tier | Description |
 | --- | --- | --- |
@@ -249,11 +251,34 @@ List of SKU sizes:
 | `S1`, `S2`, `S3` | Standard | Small, Medium, Large |
 | `P1v2`, `P2v2`, `P3v2` | PremiumV2 | Small, Medium, Large |
 
-Read more about [App Service plans](https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans).
-
 The `identity` object accepts the following keys:
 
 | Name | Type | Description |
 | --- | --- | --- |
 | `enabled` | `bool` | Whether managed service identity is enabled for the web app. Default: `true`. |
 | `ids` | `list` | List of user managed identity IDs. |
+
+The `storage_mounts` object accepts the following keys:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | The identifier of the storage mount. |
+| `account_name` | `string` | The name of the storage account. |
+| `share_name` | `string` | The name of the file share.  |
+| `container_name` | `string` | The name of the blob container. Either this or `share_name` should be specified, but not both. |
+| `mount_path` | `string` | The path to mount the storage within the web app. |
+
+The `auth` object accepts the following keys:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `enabled` | `bool` | Whether authentication is enabled for the web app. |
+| `token_store_enabled` | `bool` | Whether token store is enabled for the web app. |
+| `active_directory` | `object` | Azure Active Directory auth settings. This should be `active_directory` object. | 
+
+The `active_directory` object accepts the following keys:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `client_id` | `string` | The ID of the Azure AD application. |
+| `client_secret` | `string` | The password of the Azure AD Application. |

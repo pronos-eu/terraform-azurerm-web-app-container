@@ -128,6 +128,18 @@ variable "identity" {
   description = "Managed service identity properties."
 }
 
+variable "storage_mounts" {
+  type        = any
+  default     = []
+  description = "List of storage mounts."
+}
+
+variable "auth" {
+  type        = any
+  default     = {}
+  description = "Auth settings for the web app. This should be `auth` object."
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}
@@ -214,4 +226,24 @@ locals {
     enabled = true
     ids     = null
   }, var.identity)
+
+  storage_mounts = [
+    for s in var.storage_mounts : merge({
+      name           = ""
+      account_name   = ""
+      access_key     = ""
+      share_name     = ""
+      container_name = ""
+      mount_path     = ""
+    }, s)
+  ]
+
+  auth = merge({
+    enabled = false
+    active_directory = {
+      client_id     = ""
+      client_secret = ""
+    }
+    token_store_enabled = true
+  }, var.auth)
 }

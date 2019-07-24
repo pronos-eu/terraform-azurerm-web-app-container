@@ -225,6 +225,7 @@ module "web_app_container" {
 | `ftps_state` | `string` | Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`. Default: `Disabled`. |
 | `ip_restrictions` | `list` | A list of IP addresses in CIDR format specifying Access Restrictions. |
 | `custom_hostnames` | `list` | List of custom hostnames to use for the web app. |
+| `auth` | `object` | Auth settings for the web app. This should be `auth` object. |
 | `docker_registry_username` | `string` | The container registry username. |
 | `docker_registry_url` | `string` | The container registry url. Default: `https://index.docker.io` |
 | `docker_registry_password` | `string` | The container registry password. |
@@ -249,3 +250,18 @@ List of SKU sizes:
 | `P1v2`, `P2v2`, `P3v2` | PremiumV2 | Small, Medium, Large |
 
 Read more about [App Service plans](https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans).
+
+The `auth` object accepts the following keys:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `enabled` | `bool` | Whether authentication is enabled for the web app. |
+| `token_store_enabled` | `bool` | Whether token store is enabled for the web app. |
+| `active_directory` | `object` | Azure Active Directory auth settings. This should be `active_directory` object. | 
+
+The `active_directory` object accepts the following keys:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `client_id` | `string` | The ID of the Azure AD application. |
+| `client_secret` | `string` | The password of the Azure AD Application. |

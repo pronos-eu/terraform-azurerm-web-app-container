@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.3.0...v2.4.0) (2019-07-24)
+
+
+### Features
+
+* support for Azure AD auth ([6b15d5b](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/6b15d5b))
+
 # [2.3.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.2.1...v2.3.0) (2019-07-18)
 
 

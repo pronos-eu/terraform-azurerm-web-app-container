@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.4.0...v2.5.0) (2019-07-24)
+
+
+### Features
+
+* add `storage_mounts` argument ([536c769](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/536c769))
+
 # [2.4.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.3.0...v2.4.0) (2019-07-24)
 
 

@@ -122,6 +122,12 @@ variable "plan" {
   description = "A map of app service plan properties."
 }
 
+variable "storage_mounts" {
+  type        = any
+  default     = []
+  description = "List of storage mounts."
+}
+
 variable "auth" {
   type        = any
   default     = {}
@@ -210,6 +216,17 @@ locals {
 
   use_32_bit_worker_process = local.is_shared ? true : false
 
+  storage_mounts = [
+    for s in var.storage_mounts : merge({
+      name           = ""
+      account_name   = ""
+      access_key     = ""
+      share_name     = ""
+      container_name = ""
+      mount_path     = ""
+    }, s)
+  ]
+
   auth = merge({
     enabled = false
     active_directory = {
@@ -218,5 +235,4 @@ locals {
     }
     token_store_enabled = true
   }, var.auth)
-
 }

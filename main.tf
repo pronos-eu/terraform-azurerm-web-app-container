@@ -43,7 +43,11 @@ resource "azurerm_app_service" "main" {
   app_settings = merge(var.app_settings, local.secure_app_settings, local.app_settings)
 
   identity {
-    type = "SystemAssigned"
+    type = (local.identity.enabled ?
+      (local.identity.ids != null ? "SystemAssigned, UserAssigned" : "SystemAssigned") :
+      "None"
+    )
+    identity_ids = local.identity.ids
   }
 
   dynamic "storage_account" {

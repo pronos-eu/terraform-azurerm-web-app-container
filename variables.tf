@@ -122,6 +122,12 @@ variable "plan" {
   description = "A map of app service plan properties."
 }
 
+variable "identity" {
+  type        = any
+  default     = {}
+  description = "Managed service identity properties."
+}
+
 variable "storage_mounts" {
   type        = any
   default     = []
@@ -215,6 +221,11 @@ locals {
   always_on = local.is_shared ? false : true
 
   use_32_bit_worker_process = local.is_shared ? true : false
+
+  identity = merge({
+    enabled = true
+    ids     = null
+  }, var.identity)
 
   storage_mounts = [
     for s in var.storage_mounts : merge({

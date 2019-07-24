@@ -225,6 +225,7 @@ module "web_app_container" {
 | `ftps_state` | `string` | Set the FTPS state value the web app. The options are: `AllAllowed`, `Disabled` and `FtpsOnly`. Default: `Disabled`. |
 | `ip_restrictions` | `list` | A list of IP addresses in CIDR format specifying Access Restrictions. |
 | `custom_hostnames` | `list` | List of custom hostnames to use for the web app. |
+| `identity` | `object` | Managed service identity properties. This should be `identity` object. |
 | `auth` | `object` | Auth settings for the web app. This should be `auth` object. |
 | `docker_registry_username` | `string` | The container registry username. |
 | `docker_registry_url` | `string` | The container registry url. Default: `https://index.docker.io` |
@@ -249,6 +250,13 @@ The `sku_size` parameter can be one of the following:
 | `B1`, `B2`, `B3` | Basic | Small, Medium, Large |
 | `S1`, `S2`, `S3` | Standard | Small, Medium, Large |
 | `P1v2`, `P2v2`, `P3v2` | PremiumV2 | Small, Medium, Large |
+
+The `identity` object accepts the following keys:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `enabled` | `bool` | Whether managed service identity is enabled for the web app. Default: `true`. |
+| `ids` | `list` | List of user managed identity IDs. |
 
 The `storage_mounts` object accepts the following keys:
 

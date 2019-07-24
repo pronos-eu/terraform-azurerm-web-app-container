@@ -128,6 +128,12 @@ variable "storage_mounts" {
   description = "List of storage mounts."
 }
 
+variable "auth" {
+  type        = any
+  default     = {}
+  description = "Auth settings for the web app. This should be `auth` object."
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}
@@ -220,4 +226,13 @@ locals {
       mount_path     = ""
     }, s)
   ]
+
+  auth = merge({
+    enabled = false
+    active_directory = {
+      client_id     = ""
+      client_secret = ""
+    }
+    token_store_enabled = true
+  }, var.auth)
 }

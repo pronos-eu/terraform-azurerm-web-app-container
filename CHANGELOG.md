@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.5.0...v2.6.0) (2019-07-24)
+
+
+### Features
+
+* support for user-assigned identities ([11a0cab](https://github.com/innovationnorway/terraform-azurerm-web-app-container/commit/11a0cab))
+
 # [2.5.0](https://github.com/innovationnorway/terraform-azurerm-web-app-container/compare/v2.4.0...v2.5.0) (2019-07-24)
 
 

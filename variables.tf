@@ -122,6 +122,12 @@ variable "plan" {
   description = "A map of app service plan properties."
 }
 
+variable "enable_app_service_plan_creation" {
+  type        = bool
+  default     = true
+  description = "If set to false, app service plan will be not created. Passing `plan` is necessary then."
+}
+
 variable "identity" {
   type        = any
   default     = {}

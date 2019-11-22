@@ -5,7 +5,7 @@ data "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_app_service_plan" "main" {
-  count               = local.plan.id == "" ? 1 : 0
+  count               = var.enable_app_service_plan_creation ? 1 : 0
   name                = coalesce(local.plan.name, local.default_plan_name)
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
@@ -24,7 +24,7 @@ resource "azurerm_app_service" "main" {
   name                = var.name
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
-  app_service_plan_id = local.plan_id
+  app_service_plan_id = var.enable_app_service_plan_creation ? azurerm_app_service_plan.main[0].id : var.plan.id
 
   client_affinity_enabled = false
 

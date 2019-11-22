@@ -201,8 +201,6 @@ locals {
     sku_size = "F1"
   }, var.plan)
 
-  plan_id = coalesce(local.plan.id, azurerm_app_service_plan.main[0].id)
-
   # FIXME: create a data source that exports list of all SKUs.
   sku_map = {
     "Free"      = ["F1", "Free"]

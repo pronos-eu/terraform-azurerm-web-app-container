@@ -195,7 +195,7 @@ locals {
     sku_size = "F1"
   }, var.plan)
 
-  plan_id = coalesce(local.plan.id, azurerm_app_service_plan.main[0].id)
+  plan_id = coalesce(local.plan.id, join("", azurerm_app_service_plan.main.*.id))
 
   # FIXME: create a data source that exports list of all SKUs.
   sku_map = {

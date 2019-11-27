@@ -36,6 +36,7 @@ resource "azurerm_app_service" "main" {
     ftps_state       = var.ftps_state
     ip_restriction   = local.ip_restrictions
     linux_fx_version = local.linux_fx_version
+    http2_enabled    = var.http2_enabled
 
     use_32_bit_worker_process = local.use_32_bit_worker_process
   }

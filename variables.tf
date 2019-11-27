@@ -80,6 +80,12 @@ variable "https_only" {
   description = "Redirect all traffic made to the web app using HTTP to HTTPS."
 }
 
+variable "http2_enabled" {
+  type        = bool
+  default     = true
+  description = "Should HTTP2 be enabled?"
+}
+
 variable "ftps_state" {
   type        = string
   default     = "Disabled"

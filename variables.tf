@@ -228,7 +228,8 @@ locals {
 
   is_shared = contains(["F1", "FREE", "D1", "SHARED"], upper(local.plan.sku_size))
 
-  always_on = local.is_shared ? false : true
+  # always_on = local.is_shared ? false : true
+  always_on = var.always_on
 
   use_32_bit_worker_process = local.is_shared ? true : false
 

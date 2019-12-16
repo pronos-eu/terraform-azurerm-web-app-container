@@ -86,6 +86,12 @@ variable "http2_enabled" {
   description = "Should HTTP2 be enabled?"
 }
 
+variable "websockets_enabled" {
+  type        = bool
+  default     = false
+  description = "Determines if websockets should be enabled."
+}
+
 variable "ftps_state" {
   type        = string
   default     = "Disabled"

@@ -221,6 +221,7 @@ locals {
     "Standard"  = ["S1", "S2", "S3"]
     "Premium"   = ["P1", "P2", "P3"]
     "PremiumV2" = ["P1v2", "P2v2", "P3v2"]
+    "PremiumV3" = ["P1v3"]
   }
   skus = flatten([
     for tier, sizes in local.sku_map : [
